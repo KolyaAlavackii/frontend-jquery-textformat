@@ -1,12 +1,25 @@
 'use strict';
 
-describe('test', function () {
-	it('true to be truthy', function () {
-		expect(true).toBeTruthy()
-	})
+describe('function "format"', function () {
+    it("can delete blanks at the beginning of string", function () {
+		expect(format("  testabletext")).toEqual("testabletext")
+    });
 
-	it('1 to equal 1', function () {
-		expect(1).toEqual(1)
-	})
-})
+    it("can delete blanks at the end of string", function () {
+		expect(format("testabletext  ")).toEqual("testabletext")
+    });
+
+    it("can replace all plural blanks in text on one blank", function () {
+		expect(format("testable    text")).toEqual("testable text")
+    });
+
+     it("can substitute the transfers of strings by blanks", function () {
+		expect(format("testable\ntext")).toEqual("testable text")
+    });
+
+     it("can translate all letters in lowercase", function () {
+		expect(format("TEstableText")).toEqual("testabletext")
+    });
+
+});
 
