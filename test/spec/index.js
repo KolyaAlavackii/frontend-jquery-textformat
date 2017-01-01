@@ -1,25 +1,47 @@
 'use strict';
 
+
+
 describe('function "format"', function () {
-    it("can delete blanks at the beginning of string", function () {
-		expect(format("  testabletext")).toEqual("testabletext")
+    
+    var test = "testable text:";
+    var text = "hello world";
+
+    it(`can delete blanks at the beginning of string`, function () {
+		expect(format(`    ${test} ${text}`)).toEqual(`${test} ${text}`)
     });
 
-    it("can delete blanks at the end of string", function () {
-		expect(format("testabletext  ")).toEqual("testabletext")
+    it(`can delete blanks at the end of string`, function () {
+		expect(format(`${test} ${text}    `)).toEqual(`${test} ${text}`)
     });
 
-    it("can replace all plural blanks in text on one blank", function () {
-		expect(format("testable    text")).toEqual("testable text")
+    it(`can replace all plural blanks in text on one blank`, function () {
+		expect(format(`${test}    ${text}`)).toEqual(`${test} ${text}`)
     });
 
-     it("can substitute the transfers of strings by blanks", function () {
-		expect(format("testable\ntext")).toEqual("testable text")
+     it(`can substitute the transfers of strings by blanks`, function () {
+		expect(format(`${test}\n${text}`)).toEqual(`${test} ${text}`)
     });
 
-     it("can translate all letters in lowercase", function () {
-		expect(format("TEstableText")).toEqual("testabletext")
+     it(`can translate all letters in lowercase`, function () {
+		expect(format(`${test} ${text}`.toUpperCase())).toEqual(`${test} ${text}`)
     });
 
+     it(`can delete blanks at the beginning of line, at the end of line,
+        plural blanks on a middle, to replace translations of lines blanks
+        and translate letters in lowercase`, function () {
+        expect(format(`    ${test}    ${text}\n${test}    ${text}   `.toUpperCase()))
+        .toEqual(`${test} ${text} ${test} ${text}`)
+    });
+
+     it(`does not delete and does not replace symbols`, function () {
+        expect(format(`?${test},${text}!`)).toEqual(`?${test},${text}!`)
+    });
+
+
+     it('does not delete and does not replace a number', function () {
+        expect(format(`${test} ${text} 3 + 5`)).toEqual(`${test} ${text} 3 + 5`)
+    });
 });
 
+ 

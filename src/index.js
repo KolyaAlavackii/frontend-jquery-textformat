@@ -14,5 +14,6 @@ function format(textArray) {
 
 msgField.on('input', function() {
     msgFormatted.text(format(this.value)); 
-}); 
+});
+
 
