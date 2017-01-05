@@ -1,11 +1,9 @@
 'use strict';
 
-
+var test = "testable text:";
+var text = "hello world";
 
 describe('function "format"', function () {
-    
-    var test = "testable text:";
-    var text = "hello world";
 
     it(`can delete blanks at the beginning of string`, function () {
 		expect(format(`    ${test} ${text}`)).toEqual(`${test} ${text}`)
@@ -33,15 +31,28 @@ describe('function "format"', function () {
         expect(format(`    ${test}    ${text}\n${test}    ${text}   `.toUpperCase()))
         .toEqual(`${test} ${text} ${test} ${text}`)
     });
+});
+
+
+ describe('function "format"', function () {
 
      it(`does not delete and does not replace symbols`, function () {
         expect(format(`?${test},${text}!`)).toEqual(`?${test},${text}!`)
     });
 
 
-     it('does not delete and does not replace a number', function () {
+     it(`does not delete and does not replace a number`, function () {
         expect(format(`${test} ${text} 3 + 5`)).toEqual(`${test} ${text} 3 + 5`)
+    });
+
+     it(`does not change content if one word is passed wholly`, function () {
+        expect(format(`hello`)).toEqual(`hello`)
     });
 });
 
- 
+describe('function "format"', function () {
+
+     it(`aborts exceptions at impermissible arguments`, function(){
+        expect(function(){ format(!"string") }).toThrowError(TypeError)
+    });
+});
